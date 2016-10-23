@@ -7,7 +7,8 @@ package trabajopracticotsb;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
+import Negocio.*;
+import Entidad.*;
 /**
  *
  * @author javier
@@ -17,11 +18,16 @@ public class TrabajoPracticoTSB {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) 
+    {
         // TODO code application logic here
+        Leector leector = new Leector();
         
-                
-                
+        Vocabulario voca = new Vocabulario();
+        
+        voca.addRange(leector.DevolverListaDePalabras(leector.DevolverListaDeArchivo("C:\\Seba\\Libros [TP Unico TSB 2014]\\41575-8.txt")) , "41575-8.txt");
+        
+        System.out.println("Hola");
     }
     
 }

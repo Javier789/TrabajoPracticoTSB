@@ -61,36 +61,36 @@ public class Leector {
                 
                 String palabra = arregloPalabras[i].toLowerCase();
                 palabra = SacarSignos(palabra);
-                listaLineas.add(palabra);
+                listaPalabras.add(palabra);
             }
         }
         
         return listaPalabras;
     }
    
-   public List<Palabra> DevolverListaPalabras (List<String> listaCadena, String nombreDocumento)
-   {
-       List<Palabra> listaPalabras = new ArrayList<Palabra>();
-       boolean palabraNueva = true;
-       for (String cadena : listaCadena)
-       {
-           for (Palabra palabra : listaPalabras)
-           {
-               if(palabra.getPalabra().equals(cadena))
-               {
-                   palabra.setRepeticion(palabra.getRepeticion()+1);
-                   palabraNueva = false;
-               }
-           }
-           if(palabraNueva)
-           {
-               Palabra nuevaPalabra = new Palabra(cadena,1,nombreDocumento);
-               listaPalabras.add(nuevaPalabra);
-           }
-           palabraNueva=true;
-       }
-       return listaPalabras;
-   }
+//   public List<Palabra> DevolverListaPalabras (List<String> listaCadena, String nombreDocumento)
+//   {
+//       List<Palabra> listaPalabras = new ArrayList<Palabra>();
+//       boolean palabraNueva = true;
+//       for (String cadena : listaCadena)
+//       {
+//           for (Palabra palabra : listaPalabras)
+//           {
+//               if(palabra.getPalabra().equals(cadena))
+//               {
+//                   palabra.setRepeticion(palabra.getRepeticion()+1);
+//                   palabraNueva = false;
+//               }
+//           }
+//           if(palabraNueva)
+//           {
+//               Palabra nuevaPalabra = new Palabra(cadena,1,nombreDocumento);
+//               listaPalabras.add(nuevaPalabra);
+//           }
+//           palabraNueva=true;
+//       }
+//       return listaPalabras;
+//   }
     
    public String SacarSignos(String palabra)
    {
