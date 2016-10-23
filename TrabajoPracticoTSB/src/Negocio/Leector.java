@@ -72,7 +72,6 @@ public class Leector {
    {
        List<Palabra> listaPalabras = new ArrayList<Palabra>();
        boolean palabraNueva = true;
-       boolean documentoNuevo = true;
        for (String cadena : listaCadena)
        {
            for (Palabra palabra : listaPalabras)
@@ -81,18 +80,6 @@ public class Leector {
                {
                    palabra.setRepeticion(palabra.getRepeticion()+1);
                    palabraNueva = false;
-                   for(String documento : palabra.getConjuntoDocumento())
-                   {
-                       if(documento.equals(nombreDocumento))
-                       {
-                           documentoNuevo= false;
-                       }
-                   }
-                   if(documentoNuevo)
-                   {
-                       palabra.nuevoDocumento(nombreDocumento);
-                   }
-                   documentoNuevo=true;
                }
            }
            if(palabraNueva)
@@ -100,6 +87,7 @@ public class Leector {
                Palabra nuevaPalabra = new Palabra(cadena,1,nombreDocumento);
                listaPalabras.add(nuevaPalabra);
            }
+           palabraNueva=true;
        }
        return listaPalabras;
    }

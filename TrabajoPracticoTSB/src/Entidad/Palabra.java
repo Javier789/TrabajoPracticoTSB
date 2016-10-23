@@ -52,6 +52,10 @@ public class Palabra {
     {
         conjuntoDocumento.add(documento);
     }
+    public String primerDocumento()
+    {
+        return conjuntoDocumento.get(0);
+    }
     
     
     
