@@ -5,6 +5,12 @@
  */
 package trabajopracticotsb;
 
+import Entidad.Vocabulario;
+import Negocio.Leector;
+import java.io.File;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
 /**
  *
  * @author javier
@@ -38,6 +44,11 @@ public class MainPantalla extends javax.swing.JFrame {
 
         jButton1.setFont(new java.awt.Font("Purisa", 0, 15)); // NOI18N
         jButton1.setText("Cargar Archivo");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
 
         jButton2.setFont(new java.awt.Font("Purisa", 0, 15)); // NOI18N
         jButton2.setText("Diccionario Guardado");
@@ -77,10 +88,40 @@ public class MainPantalla extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+       JFileChooser explorador = new JFileChooser();
+       //Le cambiamos el titulo
+       explorador.setDialogTitle("Seleccionar documento...");
+       //Agregamos un filtro de extensiones
+        explorador.setFileFilter(new FileNameExtensionFilter("TEXT FILES", "txt", "text"));
+       //Muestro un dialogo sin pasarle parent con el boton de Seleccionar
+        int seleccion = explorador.showDialog(null, "Seleccionar");
+        //analizamos la respuesta
+switch(seleccion) {
+case JFileChooser.APPROVE_OPTION:
+    //Podemos crear un File con lo seleccionado
+    File archivo = explorador.getSelectedFile();
+    //y guardar una ruta
+    String ruta = archivo.getPath();
+    //Agregar a archivos a procesar
+    voca.addRange(leector.DevolverListaDePalabras(leector.DevolverListaDeArchivo(ruta)) ,"");
+ break;
+
+case JFileChooser.CANCEL_OPTION:
+ //dio click en cancelar o cerro la ventana
+ break;
+
+case JFileChooser.ERROR_OPTION:
+ //llega aqui si sucede un error
+ break;
+}
+    }//GEN-LAST:event_jButton1MouseClicked
+
     /**
      * @param args the command line arguments
      */
-    
+        Leector leector = new Leector();
+        Vocabulario voca = new Vocabulario();
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -112,7 +153,17 @@ public class MainPantalla extends javax.swing.JFrame {
                 new MainPantalla().setVisible(true);
             }
         });
+       
         
+        
+        /*// TODO code application logic here
+        Leector leector = new Leector();
+        
+        Vocabulario voca = new Vocabulario();
+        
+        
+        
+        System.out.println("Hola");*/
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
