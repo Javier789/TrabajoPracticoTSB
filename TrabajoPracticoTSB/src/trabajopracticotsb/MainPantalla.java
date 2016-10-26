@@ -6,7 +6,7 @@
 package trabajopracticotsb;
 
 import Entidad.Vocabulario;
-import Negocio.Leector;
+import Negocio.Gestor;
 import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -120,7 +120,7 @@ case JFileChooser.ERROR_OPTION:
     /**
      * @param args the command line arguments
      */
-        Leector leector = new Leector();
+        Gestor leector = new Gestor();
         Vocabulario voca = new Vocabulario();
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
