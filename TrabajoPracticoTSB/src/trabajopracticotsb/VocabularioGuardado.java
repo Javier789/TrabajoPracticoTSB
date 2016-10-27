@@ -40,6 +40,8 @@ public class VocabularioGuardado extends javax.swing.JPanel {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextPane1 = new javax.swing.JTextPane();
 
+        setBackground(java.awt.SystemColor.desktop);
+
         tabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 

@@ -44,7 +44,7 @@ public class CargarArchivo extends javax.swing.JPanel {
         jButton2 = new javax.swing.JButton();
         importar = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(188, 181, 87));
+        setBackground(java.awt.SystemColor.desktop);
 
         lista.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "No hay Archivos" };
@@ -54,6 +54,8 @@ public class CargarArchivo extends javax.swing.JPanel {
         lista.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane1.setViewportView(lista);
 
+        jButton1.setFont(new java.awt.Font("Purisa", 0, 15)); // NOI18N
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/trabajopracticotsb/181501-interface/png/document.png"))); // NOI18N
         jButton1.setText("Nuevo Archivo");
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -61,8 +63,12 @@ public class CargarArchivo extends javax.swing.JPanel {
             }
         });
 
+        jButton2.setFont(new java.awt.Font("Purisa", 0, 15)); // NOI18N
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/trabajopracticotsb/181501-interface/png/document-1.png"))); // NOI18N
         jButton2.setText("Quitar");
 
+        importar.setFont(new java.awt.Font("Purisa", 0, 15)); // NOI18N
+        importar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/trabajopracticotsb/181501-interface/png/download.png"))); // NOI18N
         importar.setText("Importar");
         importar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -79,11 +85,11 @@ public class CargarArchivo extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(jButton2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 272, Short.MAX_VALUE)
-                        .addComponent(importar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 185, Short.MAX_VALUE)
+                        .addComponent(importar, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(

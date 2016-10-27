@@ -45,23 +45,23 @@ public class MainPantalla extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        panelPrincipal.setBackground(new java.awt.Color(208, 207, 168));
+        panelPrincipal.setBackground(java.awt.SystemColor.desktop);
 
         javax.swing.GroupLayout panelPrincipalLayout = new javax.swing.GroupLayout(panelPrincipal);
         panelPrincipal.setLayout(panelPrincipalLayout);
         panelPrincipalLayout.setHorizontalGroup(
             panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 886, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         panelPrincipalLayout.setVerticalGroup(
             panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 411, Short.MAX_VALUE)
+            .addGap(0, 426, Short.MAX_VALUE)
         );
 
-        jPanel1.setBackground(new java.awt.Color(219, 201, 124));
+        jPanel1.setBackground(java.awt.SystemColor.desktop);
 
         cargarArchivo.setFont(new java.awt.Font("Purisa", 0, 15)); // NOI18N
-        cargarArchivo.setIcon(new javax.swing.ImageIcon("/home/javier/TrabajoPracticoTSB/TrabajoPracticoTSB/181501-interface/png/document.png")); // NOI18N
+        cargarArchivo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/trabajopracticotsb/181501-interface/png/document-2.png"))); // NOI18N
         cargarArchivo.setText("Cargar Archivo");
         cargarArchivo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -70,6 +70,7 @@ public class MainPantalla extends javax.swing.JFrame {
         });
 
         mostrarVocabulario.setFont(new java.awt.Font("Purisa", 0, 15)); // NOI18N
+        mostrarVocabulario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/trabajopracticotsb/181501-interface/png/list.png"))); // NOI18N
         mostrarVocabulario.setText("Vocabulario Guardado");
         mostrarVocabulario.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -85,28 +86,34 @@ public class MainPantalla extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(cargarArchivo, javax.swing.GroupLayout.PREFERRED_SIZE, 424, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(mostrarVocabulario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(mostrarVocabulario, javax.swing.GroupLayout.DEFAULT_SIZE, 434, Short.MAX_VALUE)
+                .addGap(24, 24, 24))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(cargarArchivo, javax.swing.GroupLayout.DEFAULT_SIZE, 68, Short.MAX_VALUE)
-            .addComponent(mostrarVocabulario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cargarArchivo)
+                    .addComponent(mostrarVocabulario))
+                .addGap(0, 12, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelPrincipal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(panelPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(0, 0, 0))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(panelPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(panelPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(0, 0, 0))
         );
 
         pack();
@@ -115,7 +122,7 @@ public class MainPantalla extends javax.swing.JFrame {
     private void cargarArchivoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cargarArchivoMouseClicked
          
          panelCargarArchivo.setSize(panelPrincipal.getWidth(),panelPrincipal.getHeight());
-         panelCargarArchivo.setLocation(5, 5);
+         panelCargarArchivo.setLocation(0, 0);
          panelPrincipal.removeAll();   
          panelPrincipal.add(panelCargarArchivo,BorderLayout.CENTER);
          panelPrincipal.revalidate();
@@ -126,7 +133,7 @@ public class MainPantalla extends javax.swing.JFrame {
     private void mostrarVocabularioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mostrarVocabularioMouseClicked
         
          panelVocabularioGuardadro.setSize(panelPrincipal.getWidth(),panelPrincipal.getHeight());
-         panelVocabularioGuardadro.setLocation(5, 5);
+         panelVocabularioGuardadro.setLocation(0, 0);
          panelPrincipal.removeAll();   
          panelPrincipal.add(panelVocabularioGuardadro,BorderLayout.CENTER);
          panelPrincipal.revalidate();
