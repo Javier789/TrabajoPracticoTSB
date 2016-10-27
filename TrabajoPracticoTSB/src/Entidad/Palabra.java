@@ -13,15 +13,16 @@ import java.util.List;
  * @author Sebastián
  */
 public class Palabra {
-    
+    private int idPalabra;
     private String palabra;
     private int repeticion;
-    private List<String> conjuntoDocumento = new ArrayList<String>();
+    private List<Documento> conjuntoDocumento = new ArrayList<Documento>();
 
-    public Palabra(String palabra, int repeticion, String documento) {
+    public Palabra(String palabra, int repeticion, Documento documento) {
         this.palabra = palabra;
         this.repeticion = repeticion;
         this.conjuntoDocumento.add(documento);
+        idPalabra = 0;
     }
 
     public String getPalabra() {
@@ -40,21 +41,29 @@ public class Palabra {
         this.repeticion = repeticion;
     }
 
-    public List<String> getConjuntoDocumento() {
+    public List<Documento> getConjuntoDocumento() {
         return conjuntoDocumento;
     }
 
-    public void setConjuntoDocumento(List<String> conjuntoDocumento) {
+    public void setConjuntoDocumento(List<Documento> conjuntoDocumento) {
         this.conjuntoDocumento = conjuntoDocumento;
     }
 
-    public void nuevoDocumento(String documento)
+    public void nuevoDocumento(Documento documento)
     {
         conjuntoDocumento.add(documento);
     }
-    public String primerDocumento()
+    public Documento primerDocumento()
     {
         return conjuntoDocumento.get(0);
+    }
+
+    public int getIdPalabra() {
+        return idPalabra;
+    }
+
+    public void setIdPalabra(int idPalabra) {
+        this.idPalabra = idPalabra;
     }
     
     @Override

@@ -60,13 +60,16 @@ public class Vocabulario {
            {
                if(palabra.getPalabra().equals(cadena))
                {
+                   Documento doc = new Documento(nombreDocumento);
+                   palabra.nuevoDocumento(doc);
                    palabra.setRepeticion(palabra.getRepeticion()+1);
                    palabraNueva = false;
                }
            }
            if(palabraNueva)
            {
-               Palabra nuevaPalabra = new Palabra(cadena,1,nombreDocumento);
+               Documento doc = new Documento(nombreDocumento);
+               Palabra nuevaPalabra = new Palabra(cadena,1,doc);
                listaPalabras.add(nuevaPalabra);
            }
            palabraNueva=true;

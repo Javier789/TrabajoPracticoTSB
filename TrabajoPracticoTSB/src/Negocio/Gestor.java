@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import Entidad.*;
+import Datos.*;
 /**
  *
  * @author Sebastián
@@ -26,6 +27,11 @@ public class Gestor {
     public Gestor() {
         this.listaRutas = new ArrayList<String>();
         vocabulario = new Vocabulario();
+    }
+    
+    public void CargarPalabras()
+    {
+        vocabulario.setListaPalabra(VocabularioDao.CargarPalabras());
     }
     
     public void TomarRuta(String ruta)
@@ -42,6 +48,7 @@ public class Gestor {
            String nombreDocumento = DeterminarNombreDocumento(ruta);
            vocabulario.addRange(listaPalabras,  nombreDocumento);
         }
+        VocabularioDao.GuardarLista(vocabulario.getListaPalabra());
     }
     
     public List ConsultarVocabulario()
@@ -97,6 +104,7 @@ public class Gestor {
         return listaPalabras;
     }
    
+    
 //   public List<Palabra> DevolverListaPalabras (List<String> listaCadena, String nombreDocumento)
 //   {
 //       List<Palabra> listaPalabras = new ArrayList<Palabra>();
