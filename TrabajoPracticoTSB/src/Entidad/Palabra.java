@@ -57,6 +57,10 @@ public class Palabra {
         return conjuntoDocumento.get(0);
     }
     
-    
+    @Override
+    public String toString()
+    {
+     return palabra + " " +repeticion;   
+    }
     
 }

@@ -18,14 +18,43 @@ import Entidad.*;
  *
  * @author Sebastián
  */
-public class Leector {
+public class Gestor {
 
-    public Leector() {
+    private List<String> listaRutas;
+    private Vocabulario vocabulario;
+    
+    public Gestor() {
+        this.listaRutas = new ArrayList<String>();
+        vocabulario = new Vocabulario();
     }
     
+    public void TomarRuta(String ruta)
+    {
+        listaRutas.add(ruta);
+    }
     
+    public void ProcesarArchivos()
+    {
+        for (String ruta : listaRutas)
+        {
+           List<String> listaLineasArchivo = DevolverListaDeArchivo(ruta);
+           List<String> listaPalabras = DevolverListaDePalabras(listaLineasArchivo);
+           String nombreDocumento = DeterminarNombreDocumento(ruta);
+           vocabulario.addRange(listaPalabras,  nombreDocumento);
+        }
+    }
     
-     public List<String> DevolverListaDeArchivo(String ruta)
+    public List ConsultarVocabulario()
+    {
+        return vocabulario.conocerVocabulario();
+    }
+          
+    public List<Palabra> ConsultarPorFiltro(String filtro)
+    {
+        return vocabulario.BuquedaPorFiltro(filtro);
+    }
+            
+    private List<String> DevolverListaDeArchivo(String ruta)
     {
         List<String> listaCadena = new ArrayList<String>();
         File f = new File(ruta);
@@ -49,7 +78,7 @@ public class Leector {
     }
     
      
-   public List<String> DevolverListaDePalabras(List<String> listaLineas)
+    private List<String> DevolverListaDePalabras(List<String> listaLineas)
     {
         List<String> listaPalabras = new ArrayList<String>();
         
@@ -92,10 +121,10 @@ public class Leector {
 //       return listaPalabras;
 //   }
     
-   public String SacarSignos(String palabra)
+   private String SacarSignos(String palabra)
    {
         String aRemplazar=palabra;
-        Pattern p= Pattern.compile("[-!$%&/?()¿¡,;.:-_{}*+123456789#ºª@|]");
+        Pattern p= Pattern.compile("[-!$%&/?()\"¿¡,;.:-_{}*+1234567890#ºª@|]");
 	Matcher m= p.matcher(aRemplazar);
         String   remplazado=palabra;
 	if(m.find())
@@ -105,4 +134,19 @@ public class Leector {
         
         return remplazado;
    }
+   
+   private String DeterminarNombreDocumento(String ruta)
+   {
+     String rutaCortada[] = ruta.split("\\\\");
+     String nombreLargo = rutaCortada[rutaCortada.length - 1];
+     return nombreLargo;
+   }
+   
+   private String EliminarExtension(String nombreLargo)
+   {
+       char [] arreglo = nombreLargo.toCharArray();
+       String nombreCorto = nombreLargo.substring(0, arreglo.length -4);
+       return nombreCorto;
+   }
+   
 }

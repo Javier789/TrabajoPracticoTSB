@@ -5,11 +5,11 @@
  */
 package trabajopracticotsb;
 
-import Entidad.Vocabulario;
-import Negocio.Leector;
-import java.io.File;
-import javax.swing.JFileChooser;
-import javax.swing.filechooser.FileNameExtensionFilter;
+
+import Negocio.Gestor;
+import java.awt.BorderLayout;
+import java.util.List;
+
 
 /**
  *
@@ -20,8 +20,12 @@ public class MainPantalla extends javax.swing.JFrame {
     /**
      * Creates new form MainPantalla
      */
+    VocabularioGuardado panelVocabularioGuardadro;
+    CargarArchivo panelCargarArchivo;
     public MainPantalla() {
         initComponents();
+         panelVocabularioGuardadro = new VocabularioGuardado(this);
+        panelCargarArchivo = new CargarArchivo(this);
     }
 
     /**
@@ -34,94 +38,116 @@ public class MainPantalla extends javax.swing.JFrame {
     private void initComponents() {
 
         jPopupMenu1 = new javax.swing.JPopupMenu();
+        panelPrincipal = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        cargarArchivo = new javax.swing.JButton();
+        mostrarVocabulario = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(208, 207, 168));
+        panelPrincipal.setBackground(new java.awt.Color(208, 207, 168));
 
-        jButton1.setFont(new java.awt.Font("Purisa", 0, 15)); // NOI18N
-        jButton1.setText("Cargar Archivo");
-        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+        javax.swing.GroupLayout panelPrincipalLayout = new javax.swing.GroupLayout(panelPrincipal);
+        panelPrincipal.setLayout(panelPrincipalLayout);
+        panelPrincipalLayout.setHorizontalGroup(
+            panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 886, Short.MAX_VALUE)
+        );
+        panelPrincipalLayout.setVerticalGroup(
+            panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 411, Short.MAX_VALUE)
+        );
+
+        jPanel1.setBackground(new java.awt.Color(219, 201, 124));
+
+        cargarArchivo.setFont(new java.awt.Font("Purisa", 0, 15)); // NOI18N
+        cargarArchivo.setIcon(new javax.swing.ImageIcon("/home/javier/TrabajoPracticoTSB/TrabajoPracticoTSB/181501-interface/png/document.png")); // NOI18N
+        cargarArchivo.setText("Cargar Archivo");
+        cargarArchivo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton1MouseClicked(evt);
+                cargarArchivoMouseClicked(evt);
             }
         });
 
-        jButton2.setFont(new java.awt.Font("Purisa", 0, 15)); // NOI18N
-        jButton2.setText("Diccionario Guardado");
+        mostrarVocabulario.setFont(new java.awt.Font("Purisa", 0, 15)); // NOI18N
+        mostrarVocabulario.setText("Vocabulario Guardado");
+        mostrarVocabulario.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                mostrarVocabularioMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(290, 290, 290)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(278, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(cargarArchivo, javax.swing.GroupLayout.PREFERRED_SIZE, 424, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(mostrarVocabulario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(130, 130, 130)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(48, 48, 48)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(199, Short.MAX_VALUE))
+            .addComponent(cargarArchivo, javax.swing.GroupLayout.DEFAULT_SIZE, 68, Short.MAX_VALUE)
+            .addComponent(mostrarVocabulario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(panelPrincipal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(panelPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
-       JFileChooser explorador = new JFileChooser();
-       //Le cambiamos el titulo
-       explorador.setDialogTitle("Seleccionar documento...");
-       //Agregamos un filtro de extensiones
-        explorador.setFileFilter(new FileNameExtensionFilter("TEXT FILES", "txt", "text"));
-       //Muestro un dialogo sin pasarle parent con el boton de Seleccionar
-        int seleccion = explorador.showDialog(null, "Seleccionar");
-        //analizamos la respuesta
-switch(seleccion) {
-case JFileChooser.APPROVE_OPTION:
-    //Podemos crear un File con lo seleccionado
-    File archivo = explorador.getSelectedFile();
-    //y guardar una ruta
-    String ruta = archivo.getPath();
-    //Agregar a archivos a procesar
-    voca.addRange(leector.DevolverListaDePalabras(leector.DevolverListaDeArchivo(ruta)) ,"");
- break;
+    private void cargarArchivoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cargarArchivoMouseClicked
+         
+         panelCargarArchivo.setSize(panelPrincipal.getWidth(),panelPrincipal.getHeight());
+         panelCargarArchivo.setLocation(5, 5);
+         panelPrincipal.removeAll();   
+         panelPrincipal.add(panelCargarArchivo,BorderLayout.CENTER);
+         panelPrincipal.revalidate();
+         panelPrincipal.repaint();
+       
+    }//GEN-LAST:event_cargarArchivoMouseClicked
 
-case JFileChooser.CANCEL_OPTION:
- //dio click en cancelar o cerro la ventana
- break;
-
-case JFileChooser.ERROR_OPTION:
- //llega aqui si sucede un error
- break;
-}
-    }//GEN-LAST:event_jButton1MouseClicked
-
+    private void mostrarVocabularioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mostrarVocabularioMouseClicked
+        
+         panelVocabularioGuardadro.setSize(panelPrincipal.getWidth(),panelPrincipal.getHeight());
+         panelVocabularioGuardadro.setLocation(5, 5);
+         panelPrincipal.removeAll();   
+         panelPrincipal.add(panelVocabularioGuardadro,BorderLayout.CENTER);
+         panelPrincipal.revalidate();
+         panelPrincipal.repaint();
+         panelVocabularioGuardadro.cargarTabla();
+        
+    }//GEN-LAST:event_mostrarVocabularioMouseClicked
+    public  void tomarArchivo(String ruta){
+       leector.TomarRuta(ruta);
+    }
+    public List conocerVocabulario(){
+        return leector.ConsultarVocabulario();
+    }
+    public void Procesar(){
+        leector.ProcesarArchivos();
+    }
     /**
      * @param args the command line arguments
      */
-        Leector leector = new Leector();
-        Vocabulario voca = new Vocabulario();
+        private Gestor leector = new Gestor();
+        
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -153,23 +179,14 @@ case JFileChooser.ERROR_OPTION:
                 new MainPantalla().setVisible(true);
             }
         });
-       
-        
-        
-        /*// TODO code application logic here
-        Leector leector = new Leector();
-        
-        Vocabulario voca = new Vocabulario();
-        
-        
-        
-        System.out.println("Hola");*/
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton cargarArchivo;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPopupMenu jPopupMenu1;
+    private javax.swing.JButton mostrarVocabulario;
+    private javax.swing.JPanel panelPrincipal;
     // End of variables declaration//GEN-END:variables
 }

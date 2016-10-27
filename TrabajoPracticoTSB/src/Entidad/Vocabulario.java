@@ -85,4 +85,18 @@ public class Vocabulario {
         }
         return listaFiltrada;
     }
+    
+    public List conocerVocabulario(){
+        List vocabulario = new ArrayList<String>();
+        
+        for(Palabra p : this.listaPalabras){
+            List<String> palabra = new ArrayList<String>();
+            palabra.add(p.getPalabra());
+            palabra.add(""+p.getRepeticion());
+            palabra.add(""+p.getConjuntoDocumento().size());
+            vocabulario.add(palabra);
+        }
+        
+        return vocabulario;
+    }
 }
