@@ -60,10 +60,21 @@ public class Vocabulario {
            {
                if(palabra.getPalabra().equals(cadena))
                {
-                   Documento doc = new Documento(nombreDocumento);
-                   palabra.nuevoDocumento(doc);
+                   boolean yaExiste = false;
                    palabra.setRepeticion(palabra.getRepeticion()+1);
                    palabraNueva = false;
+                   for ( Documento nombreDoc : palabra.getConjuntoDocumento() )
+                   {
+                       if(nombreDoc.getNombre().equals(nombreDocumento))
+                       {
+                           yaExiste = true;
+                       }
+                   }
+                   if(!yaExiste)
+                   {
+                       Documento doc = new Documento(nombreDocumento);
+                       palabra.nuevoDocumento(doc);
+                   }
                }
            }
            if(palabraNueva)
