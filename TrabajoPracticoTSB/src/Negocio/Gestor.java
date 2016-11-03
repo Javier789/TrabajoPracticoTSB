@@ -154,17 +154,28 @@ public class Gestor extends SwingWorker<Void,Integer>{
 
     @Override
     protected Void doInBackground() throws Exception {
-        int cant = listaRutas.size();
+        int cant = (100/(listaRutas.size()*3)),i=0;
+        
         for (String ruta : listaRutas)
         {
+         long time_start, time_end;
+            time_start = System.currentTimeMillis();   
             String nombreDocumento = DeterminarNombreDocumento(ruta);
             List<String> listaLineasArchivo = DevolverListaDeArchivo(ruta);
+            i++;
+            setProgress(cant*i);
             List<String> listaPalabras = DevolverListaDePalabras(listaLineasArchivo);
+            i++;
+            setProgress(cant*i);
             vocabulario.addRange(listaPalabras,  nombreDocumento);
-           
-            setProgress(50);
+            i++;
+            setProgress(cant*i);
+            time_end = System.currentTimeMillis();
+            System.out.println("the task has taken "+ ( time_end - time_start ) +" milliseconds");
         }
-        VocabularioDao.GuardarLista(vocabulario.getListaPalabra());     
+        //VocabularioDao.GuardarLista(vocabulario.getListaPalabra());
+        setProgress(100);
+        
         return null;
     }
 

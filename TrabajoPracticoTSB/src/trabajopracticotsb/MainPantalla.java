@@ -8,11 +8,12 @@ package trabajopracticotsb;
 
 import Negocio.Gestor;
 import java.awt.BorderLayout;
+
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JProgressBar;
+import javax.swing.ProgressMonitor;
 
 
 /**
@@ -30,6 +31,7 @@ public class MainPantalla extends javax.swing.JFrame {
         initComponents();
          panelVocabularioGuardadro = new VocabularioGuardado(this);
         panelCargarArchivo = new CargarArchivo(this);
+       
     }
 
     /**
@@ -46,7 +48,6 @@ public class MainPantalla extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         cargarArchivo = new javax.swing.JButton();
         mostrarVocabulario = new javax.swing.JButton();
-        barraProgreso = new javax.swing.JProgressBar();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -93,7 +94,6 @@ public class MainPantalla extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(mostrarVocabulario, javax.swing.GroupLayout.DEFAULT_SIZE, 434, Short.MAX_VALUE)
                 .addGap(24, 24, 24))
-            .addComponent(barraProgreso, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -101,8 +101,7 @@ public class MainPantalla extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cargarArchivo)
                     .addComponent(mostrarVocabulario))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(barraProgreso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -118,7 +117,7 @@ public class MainPantalla extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(0, 0, 0))
+                .addContainerGap())
         );
 
         pack();
@@ -153,10 +152,20 @@ public class MainPantalla extends javax.swing.JFrame {
         return leector.ConsultarVocabulario();
     }
     public void Procesar(){
+     ProgressMonitor progressMonitor = new ProgressMonitor(this,
+                                  "Importando...",
+                                  "", 0, 100);
+     progressMonitor.setProgress(10);
         leector.addPropertyChangeListener(new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
-                //barraProgreso.setValue((Integer) evt.getNewValue());
+                if ("progress".equals(evt.getPropertyName())) {
+                    int progress = (Integer) evt.getNewValue();
+                 progressMonitor.setProgress(progress);
+                 String message =
+                String.format("Completed %d%%.\n", progress);
+            progressMonitor.setNote(message);
+                }
             }
         });
         leector.execute();
@@ -204,7 +213,6 @@ public class MainPantalla extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JProgressBar barraProgreso;
     private javax.swing.JButton cargarArchivo;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPopupMenu jPopupMenu1;

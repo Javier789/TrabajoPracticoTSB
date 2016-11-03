@@ -54,38 +54,55 @@ public class Vocabulario {
 //    }
     public void addRange(List<String> listaCadena, String nombreDocumento)
     {
-       boolean palabraNueva = true;
+       
+        
+       //Recorrer toda Lista de entrada
        for (String cadena : listaCadena)
        {
+           //Bandera Palabra nueva
+            boolean palabraNueva = true;
+           //Por cada palabra nueva buscamos en la lista de palabras
            for (Palabra palabra : listaPalabras)
            {
+               //Pregunta si la palabra actual es igual a la cadena de entrada
                if(palabra.getPalabra().equals(cadena))
                {
-                   boolean yaExiste = false;
+                   
+                   //Entonces si ya tenemos la palabra en la lista aumentamos las repeticiones
                    palabra.setRepeticion(palabra.getRepeticion()+1);
+                   //No es una palabra nueva
                    palabraNueva = false;
+                   //Ahora vamos a recorrer la lista de documentos
+                   //bandera de si ya existe entre los documentos
+                   boolean noExisteElArchivo = true;
                    for ( Documento nombreDoc : palabra.getConjuntoDocumento() )
                    {
                        if(nombreDoc.getNombre().equals(nombreDocumento))
                        {
-                           yaExiste = true;
+                           noExisteElArchivo = false;
+                           //Como el archivo si existia no seguimos recorriendo
+                           break;
                        }
                    }
-                   if(!yaExiste)
+                   if(noExisteElArchivo)
                    {
                        Documento doc = new Documento(nombreDocumento);
                        palabra.nuevoDocumento(doc);
                    }
+                   //Como la palabra ya estaba en la lista no seguimos
+                   break;
                }
+               
            }
+           //Utilizamos la bandera para saber si es una palabra nueva
            if(palabraNueva)
            {
+               //si lo es la gregamos
                Documento doc = new Documento(nombreDocumento);
                Palabra nuevaPalabra = new Palabra(cadena,1,doc);
                listaPalabras.add(nuevaPalabra);
                
            }
-           palabraNueva=true;
        }
        
     }
