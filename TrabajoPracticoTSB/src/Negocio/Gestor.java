@@ -15,11 +15,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import Entidad.*;
 import Datos.*;
+import javax.swing.SwingWorker;
 /**
  *
  * @author Sebastián
  */
-public class Gestor {
+public class Gestor extends SwingWorker<Void,Integer>{
 
     private List<String> listaRutas;
     private Vocabulario vocabulario;
@@ -39,16 +40,10 @@ public class Gestor {
         listaRutas.add(ruta);
     }
     
-    public void ProcesarArchivos()
+    public void ProcesarArchivo(String ruta)
     {
-        for (String ruta : listaRutas)
-        {
-           List<String> listaLineasArchivo = DevolverListaDeArchivo(ruta);
-           List<String> listaPalabras = DevolverListaDePalabras(listaLineasArchivo);
-           String nombreDocumento = DeterminarNombreDocumento(ruta);
-           vocabulario.addRange(listaPalabras,  nombreDocumento);
-        }
-        VocabularioDao.GuardarLista(vocabulario.getListaPalabra());
+            
+       
     }
     
     public List ConsultarVocabulario()
@@ -56,7 +51,7 @@ public class Gestor {
         return vocabulario.conocerVocabulario();
     }
           
-    public List<Palabra> ConsultarPorFiltro(String filtro)
+    public List ConsultarPorFiltro(String filtro)
     {
         return vocabulario.BuquedaPorFiltro(filtro);
     }
@@ -156,5 +151,23 @@ public class Gestor {
        String nombreCorto = nombreLargo.substring(0, arreglo.length -4);
        return nombreCorto;
    }
+
+    @Override
+    protected Void doInBackground() throws Exception {
+        int cant = listaRutas.size();
+        for (String ruta : listaRutas)
+        {
+            String nombreDocumento = DeterminarNombreDocumento(ruta);
+            List<String> listaLineasArchivo = DevolverListaDeArchivo(ruta);
+            List<String> listaPalabras = DevolverListaDePalabras(listaLineasArchivo);
+            vocabulario.addRange(listaPalabras,  nombreDocumento);
+           
+            setProgress(50);
+        }
+        VocabularioDao.GuardarLista(vocabulario.getListaPalabra());     
+        return null;
+    }
+
+   
    
 }

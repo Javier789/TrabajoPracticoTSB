@@ -38,7 +38,7 @@ public class VocabularioGuardado extends javax.swing.JPanel {
         tabla = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextPane1 = new javax.swing.JTextPane();
+        txtFiltro = new javax.swing.JTextPane();
 
         setBackground(java.awt.SystemColor.desktop);
 
@@ -65,9 +65,16 @@ public class VocabularioGuardado extends javax.swing.JPanel {
             tabla.getColumnModel().getColumn(2).setResizable(false);
         }
 
+        jLabel1.setFont(new java.awt.Font("Purisa", 0, 15)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(254, 254, 254));
         jLabel1.setText("Filtro");
 
-        jScrollPane2.setViewportView(jTextPane1);
+        txtFiltro.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtFiltroKeyPressed(evt);
+            }
+        });
+        jScrollPane2.setViewportView(txtFiltro);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -99,20 +106,28 @@ public class VocabularioGuardado extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void txtFiltroKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFiltroKeyPressed
+      this.cargarTabla((ArrayList)this.ventanaPrincipal.vocabularioFiltrado(txtFiltro.getText()));
+    }//GEN-LAST:event_txtFiltroKeyPressed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextPane jTextPane1;
     private javax.swing.JTable tabla;
+    private javax.swing.JTextPane txtFiltro;
     // End of variables declaration//GEN-END:variables
 
-    public void cargarTabla() {
-        ArrayList <ArrayList> vocabulario = (ArrayList) this.ventanaPrincipal.conocerVocabulario();
-        DefaultTableModel m = (DefaultTableModel) tabla.getModel();
+    public void cargarTabla(ArrayList <ArrayList> vocabulario) {
+        
+        DefaultTableModel m = new DefaultTableModel();
+        m.addColumn("Palabra");
+        m.addColumn("Frecuencia");
+        m.addColumn("Cant. Documentos");
         for(ArrayList palabra : vocabulario){
             m.addRow(palabra.toArray());
         }
+        tabla.setModel(m);
     }
 }

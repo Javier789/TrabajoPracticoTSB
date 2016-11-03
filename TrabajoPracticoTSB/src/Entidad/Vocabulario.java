@@ -5,6 +5,7 @@
  */
 package Entidad;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +16,7 @@ import java.util.List;
 public class Vocabulario {
     
     public List<Palabra> listaPalabras;
-
+   
     public Vocabulario() {
         this.listaPalabras = new ArrayList<Palabra>();
     }
@@ -82,27 +83,33 @@ public class Vocabulario {
                Documento doc = new Documento(nombreDocumento);
                Palabra nuevaPalabra = new Palabra(cadena,1,doc);
                listaPalabras.add(nuevaPalabra);
+               
            }
            palabraNueva=true;
        }
+       
     }
     
-    public List<Palabra> BuquedaPorFiltro(String filtro)
+    public List BuquedaPorFiltro(String filtro)
     {
-        List<Palabra> listaFiltrada = new ArrayList<Palabra>();
+        List vocabularioFiltrado = new ArrayList<String>();
         for (Palabra palabra : listaPalabras)
         {
             if(palabra.getPalabra().startsWith(filtro))
             {
-                listaFiltrada.add(palabra);
+                List<String> PalFiltrada = new ArrayList<String>();
+                PalFiltrada.add(palabra.getPalabra());
+                PalFiltrada.add(""+palabra.getRepeticion());
+                PalFiltrada.add(""+palabra.getConjuntoDocumento().size());
+                vocabularioFiltrado.add(PalFiltrada);
             }
         }
-        return listaFiltrada;
+        return vocabularioFiltrado;
     }
     
     public List conocerVocabulario(){
-        List vocabulario = new ArrayList<String>();
         
+        List vocabulario = new ArrayList<String>();
         for(Palabra p : this.listaPalabras){
             List<String> palabra = new ArrayList<String>();
             palabra.add(p.getPalabra());
@@ -113,4 +120,6 @@ public class Vocabulario {
         
         return vocabulario;
     }
+    
+    
 }

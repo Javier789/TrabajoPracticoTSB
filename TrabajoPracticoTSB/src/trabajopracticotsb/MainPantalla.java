@@ -8,7 +8,11 @@ package trabajopracticotsb;
 
 import Negocio.Gestor;
 import java.awt.BorderLayout;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JProgressBar;
 
 
 /**
@@ -42,6 +46,7 @@ public class MainPantalla extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         cargarArchivo = new javax.swing.JButton();
         mostrarVocabulario = new javax.swing.JButton();
+        barraProgreso = new javax.swing.JProgressBar();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -55,7 +60,7 @@ public class MainPantalla extends javax.swing.JFrame {
         );
         panelPrincipalLayout.setVerticalGroup(
             panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 426, Short.MAX_VALUE)
+            .addGap(0, 412, Short.MAX_VALUE)
         );
 
         jPanel1.setBackground(java.awt.SystemColor.desktop);
@@ -88,6 +93,7 @@ public class MainPantalla extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(mostrarVocabulario, javax.swing.GroupLayout.DEFAULT_SIZE, 434, Short.MAX_VALUE)
                 .addGap(24, 24, 24))
+            .addComponent(barraProgreso, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -95,7 +101,8 @@ public class MainPantalla extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cargarArchivo)
                     .addComponent(mostrarVocabulario))
-                .addGap(0, 12, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(barraProgreso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -103,9 +110,7 @@ public class MainPantalla extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(panelPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(0, 0, 0))
+            .addComponent(panelPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -120,7 +125,7 @@ public class MainPantalla extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cargarArchivoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cargarArchivoMouseClicked
-         
+
          panelCargarArchivo.setSize(panelPrincipal.getWidth(),panelPrincipal.getHeight());
          panelCargarArchivo.setLocation(0, 0);
          panelPrincipal.removeAll();   
@@ -138,7 +143,7 @@ public class MainPantalla extends javax.swing.JFrame {
          panelPrincipal.add(panelVocabularioGuardadro,BorderLayout.CENTER);
          panelPrincipal.revalidate();
          panelPrincipal.repaint();
-         panelVocabularioGuardadro.cargarTabla();
+         panelVocabularioGuardadro.cargarTabla((ArrayList)conocerVocabulario());
         
     }//GEN-LAST:event_mostrarVocabularioMouseClicked
     public  void tomarArchivo(String ruta){
@@ -148,7 +153,16 @@ public class MainPantalla extends javax.swing.JFrame {
         return leector.ConsultarVocabulario();
     }
     public void Procesar(){
-        leector.ProcesarArchivos();
+        leector.addPropertyChangeListener(new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                //barraProgreso.setValue((Integer) evt.getNewValue());
+            }
+        });
+        leector.execute();
+    }
+    public List vocabularioFiltrado(String tex){
+        return leector.ConsultarPorFiltro(tex);
     }
     /**
      * @param args the command line arguments
@@ -190,6 +204,7 @@ public class MainPantalla extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JProgressBar barraProgreso;
     private javax.swing.JButton cargarArchivo;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPopupMenu jPopupMenu1;
