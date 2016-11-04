@@ -8,6 +8,8 @@ package Entidad;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
@@ -16,9 +18,11 @@ import java.util.List;
 public class Vocabulario {
     
     public List<Palabra> listaPalabras;
+    public Map<String,Integer> indice;
    
     public Vocabulario() {
         this.listaPalabras = new ArrayList<Palabra>();
+         indice = new HashMap<String,Integer>();
     }
 
     public List<Palabra> getListaPalabra() {
@@ -29,29 +33,6 @@ public class Vocabulario {
         this.listaPalabras = listaPalabra;
     }
     
-//    public void addRange(List<Palabra> listaPalabrasNuevas)
-//    {
-//       boolean palabraNuevaBool = true;
-//       
-//       for (Palabra palabraNueva : listaPalabrasNuevas)
-//       {
-//           for (Palabra palabra : listaPalabras)
-//           {
-//               if(palabra.getPalabra().equals(palabraNueva.getPalabra()))
-//               {
-//                   palabra.setRepeticion(palabra.getRepeticion() + palabraNueva.getRepeticion());
-//                   palabra.nuevoDocumento(palabraNueva.primerDocumento());
-//                   palabraNuevaBool = false;
-//               }
-//           }
-//           if(palabraNuevaBool)
-//           {
-//               Palabra nuevaPalabra = new Palabra(palabraNueva.getPalabra(),palabraNueva.getRepeticion(),palabraNueva.primerDocumento());
-//               listaPalabras.add(nuevaPalabra);
-//           }
-//           palabraNuevaBool=true;
-//       }
-//    }
     public void addRange(List<String> listaCadena, String nombreDocumento)
     {
        
@@ -106,7 +87,40 @@ public class Vocabulario {
        }
        
     }
-    
+    public void addRangeOptimo(List<String> listaCadena, String nombreDocumento){
+        for (String cadena : listaCadena)
+       {
+           Object n = indice.get(cadena);
+           if (n != null) {
+               int num = (Integer) n;
+               Palabra palabra = listaPalabras.get(num);
+               //Entonces si ya tenemos la palabra en la lista aumentamos las repeticiones
+                   palabra.setRepeticion(palabra.getRepeticion()+1);
+               boolean noExisteElArchivo = true; 
+               for ( Documento nombreDoc : palabra.getConjuntoDocumento() )
+                   {
+                       if(nombreDoc.getNombre().equals(nombreDocumento))
+                       {
+                           noExisteElArchivo = false;
+                           //Como el archivo si existia no seguimos recorriendo
+                           break;
+                       }
+                   }
+                   if(noExisteElArchivo)
+                   {
+                       Documento doc = new Documento(nombreDocumento);
+                       palabra.nuevoDocumento(doc);
+                   }
+           }
+           else{
+               //agregamos
+               Documento doc = new Documento(nombreDocumento);
+               Palabra nuevaPalabra = new Palabra(cadena,1,doc);
+               listaPalabras.add(nuevaPalabra);
+               indice.put(cadena,listaPalabras.size()-1);
+           }
+       }
+    }
     public List BuquedaPorFiltro(String filtro)
     {
         List vocabularioFiltrado = new ArrayList<String>();

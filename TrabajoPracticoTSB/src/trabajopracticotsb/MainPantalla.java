@@ -29,6 +29,7 @@ public class MainPantalla extends javax.swing.JFrame {
     CargarArchivo panelCargarArchivo;
     public MainPantalla() {
         initComponents();
+           this.setResizable(false);
          panelVocabularioGuardadro = new VocabularioGuardado(this);
         panelCargarArchivo = new CargarArchivo(this);
        
@@ -50,6 +51,7 @@ public class MainPantalla extends javax.swing.JFrame {
         mostrarVocabulario = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         panelPrincipal.setBackground(java.awt.SystemColor.desktop);
 
@@ -61,48 +63,33 @@ public class MainPantalla extends javax.swing.JFrame {
         );
         panelPrincipalLayout.setVerticalGroup(
             panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 412, Short.MAX_VALUE)
+            .addGap(0, 454, Short.MAX_VALUE)
         );
 
         jPanel1.setBackground(java.awt.SystemColor.desktop);
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         cargarArchivo.setFont(new java.awt.Font("Purisa", 0, 15)); // NOI18N
         cargarArchivo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/trabajopracticotsb/181501-interface/png/document-2.png"))); // NOI18N
         cargarArchivo.setText("Cargar Archivo");
+        cargarArchivo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         cargarArchivo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 cargarArchivoMouseClicked(evt);
             }
         });
+        jPanel1.add(cargarArchivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 0, 424, -1));
 
         mostrarVocabulario.setFont(new java.awt.Font("Purisa", 0, 15)); // NOI18N
         mostrarVocabulario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/trabajopracticotsb/181501-interface/png/list.png"))); // NOI18N
         mostrarVocabulario.setText("Vocabulario Guardado");
+        mostrarVocabulario.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         mostrarVocabulario.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 mostrarVocabularioMouseClicked(evt);
             }
         });
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(cargarArchivo, javax.swing.GroupLayout.PREFERRED_SIZE, 424, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(mostrarVocabulario, javax.swing.GroupLayout.DEFAULT_SIZE, 434, Short.MAX_VALUE)
-                .addGap(24, 24, 24))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cargarArchivo)
-                    .addComponent(mostrarVocabulario))
-                .addContainerGap(14, Short.MAX_VALUE))
-        );
+        jPanel1.add(mostrarVocabulario, new org.netbeans.lib.awtextra.AbsoluteConstraints(442, 0, 434, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -116,8 +103,7 @@ public class MainPantalla extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panelPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(panelPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -151,11 +137,11 @@ public class MainPantalla extends javax.swing.JFrame {
     public List conocerVocabulario(){
         return leector.ConsultarVocabulario();
     }
-    public void Procesar(){
-     ProgressMonitor progressMonitor = new ProgressMonitor(this,
+    ProgressMonitor progressMonitor = new ProgressMonitor(null,
                                   "Importando...",
                                   "", 0, 100);
-     progressMonitor.setProgress(10);
+    public void Procesar(){
+        leector.execute();
         leector.addPropertyChangeListener(new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
@@ -165,10 +151,11 @@ public class MainPantalla extends javax.swing.JFrame {
                  String message =
                 String.format("Completed %d%%.\n", progress);
             progressMonitor.setNote(message);
+                
                 }
             }
         });
-        leector.execute();
+        
     }
     public List vocabularioFiltrado(String tex){
         return leector.ConsultarPorFiltro(tex);

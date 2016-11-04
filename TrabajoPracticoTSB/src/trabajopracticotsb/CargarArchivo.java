@@ -6,8 +6,10 @@
 package trabajopracticotsb;
 
 import java.io.File;
+import static javax.management.timer.Timer.ONE_SECOND;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
+import javax.swing.ProgressMonitor;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 
@@ -41,7 +43,7 @@ public class CargarArchivo extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         lista = new javax.swing.JList<>();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnquitar = new javax.swing.JButton();
         importar = new javax.swing.JButton();
 
         setBackground(java.awt.SystemColor.desktop);
@@ -52,24 +54,33 @@ public class CargarArchivo extends javax.swing.JPanel {
             public String getElementAt(int i) { return strings[i]; }
         });
         lista.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        lista.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jScrollPane1.setViewportView(lista);
 
         jButton1.setFont(new java.awt.Font("Purisa", 0, 15)); // NOI18N
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/trabajopracticotsb/181501-interface/png/document.png"))); // NOI18N
         jButton1.setText("Nuevo Archivo");
+        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton1MouseClicked(evt);
             }
         });
 
-        jButton2.setFont(new java.awt.Font("Purisa", 0, 15)); // NOI18N
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/trabajopracticotsb/181501-interface/png/document-1.png"))); // NOI18N
-        jButton2.setText("Quitar");
+        btnquitar.setFont(new java.awt.Font("Purisa", 0, 15)); // NOI18N
+        btnquitar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/trabajopracticotsb/181501-interface/png/document-1.png"))); // NOI18N
+        btnquitar.setText("Quitar");
+        btnquitar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnquitar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnquitarMouseClicked(evt);
+            }
+        });
 
         importar.setFont(new java.awt.Font("Purisa", 0, 15)); // NOI18N
         importar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/trabajopracticotsb/181501-interface/png/download.png"))); // NOI18N
         importar.setText("Importar");
+        importar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         importar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 importarMouseClicked(evt);
@@ -87,7 +98,7 @@ public class CargarArchivo extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton2)
+                        .addComponent(btnquitar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 185, Short.MAX_VALUE)
                         .addComponent(importar, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
@@ -100,7 +111,7 @@ public class CargarArchivo extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
-                    .addComponent(jButton2)
+                    .addComponent(btnquitar)
                     .addComponent(importar))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -140,15 +151,24 @@ case JFileChooser.ERROR_OPTION:
         for (int i = 0; i < model.size(); i++) {
             ventanaPrincipal.tomarArchivo(model.get(i));
         }
+        
         this.ventanaPrincipal.Procesar();
         this.model.clear();
+        this.model.addElement("Agregar más archivos");
     }//GEN-LAST:event_importarMouseClicked
+
+    private void btnquitarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnquitarMouseClicked
+        int i = lista.getSelectedIndex();
+        if (i != -1) {
+            model.remove(i);
+        }
+    }//GEN-LAST:event_btnquitarMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnquitar;
     private javax.swing.JButton importar;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JList<String> lista;
     // End of variables declaration//GEN-END:variables

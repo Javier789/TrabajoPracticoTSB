@@ -69,6 +69,7 @@ public class VocabularioGuardado extends javax.swing.JPanel {
         jLabel1.setForeground(new java.awt.Color(254, 254, 254));
         jLabel1.setText("Filtro");
 
+        txtFiltro.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         txtFiltro.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtFiltroKeyPressed(evt);
@@ -107,7 +108,13 @@ public class VocabularioGuardado extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtFiltroKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFiltroKeyPressed
-      this.cargarTabla((ArrayList)this.ventanaPrincipal.vocabularioFiltrado(txtFiltro.getText()));
+        char c = evt.getKeyChar();
+        if (Character.isLetter(c)) {
+            this.cargarTabla((ArrayList)this.ventanaPrincipal.vocabularioFiltrado(txtFiltro.getText()+c));
+        }
+        else{
+           this.cargarTabla((ArrayList)this.ventanaPrincipal.vocabularioFiltrado(txtFiltro.getText())); 
+        }
     }//GEN-LAST:event_txtFiltroKeyPressed
 
 
