@@ -9,6 +9,7 @@ package Entidad;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -28,13 +29,11 @@ public class Vocabulario {
     public List<Palabra> getListaPalabra() {
         return listaPalabras;
     }
-
     public void setListaPalabra(List<Palabra> listaPalabra) {
         this.listaPalabras = listaPalabra;
+        ordenarIndice();
     }
-    
-    public void addRange(List<String> listaCadena, String nombreDocumento)
-    {
+    public void addRange(List<String> listaCadena, String nombreDocumento){
        
         
        //Recorrer toda Lista de entrada
@@ -80,8 +79,8 @@ public class Vocabulario {
            {
                //si lo es la gregamos
                Documento doc = new Documento(nombreDocumento);
-               Palabra nuevaPalabra = new Palabra(cadena,1,doc);
-               listaPalabras.add(nuevaPalabra);
+               //Palabra nuevaPalabra = new Palabra(cadena,1,doc);
+               //listaPalabras.add(nuevaPalabra);
                
            }
        }
@@ -96,8 +95,8 @@ public class Vocabulario {
                Palabra palabra = listaPalabras.get(num);
                //Entonces si ya tenemos la palabra en la lista aumentamos las repeticiones
                    palabra.setRepeticion(palabra.getRepeticion()+1);
-               boolean noExisteElArchivo = true; 
-               for ( Documento nombreDoc : palabra.getConjuntoDocumento() )
+                   boolean noExisteElArchivo = true;
+                   for ( Documento nombreDoc : palabra.getConjuntoDocumento() )
                    {
                        if(nombreDoc.getNombre().equals(nombreDocumento))
                        {
@@ -108,14 +107,13 @@ public class Vocabulario {
                    }
                    if(noExisteElArchivo)
                    {
-                       Documento doc = new Documento(nombreDocumento);
-                       palabra.nuevoDocumento(doc);
+                       palabra.nuevoDocumento(existeDoc(nombreDocumento));
                    }
+                        
            }
            else{
                //agregamos
-               Documento doc = new Documento(nombreDocumento);
-               Palabra nuevaPalabra = new Palabra(cadena,1,doc);
+               Palabra nuevaPalabra = new Palabra(cadena,1,existeDoc(nombreDocumento));
                listaPalabras.add(nuevaPalabra);
                indice.put(cadena,listaPalabras.size()-1);
            }
@@ -151,6 +149,26 @@ public class Vocabulario {
         
         return vocabulario;
     }
+
+    private void ordenarIndice() {
+        for (int i = 0; i < this.listaPalabras.size(); i++) {
+            this.indice.put(this.listaPalabras.get(i).getPalabra(),i);
+        }
+    }
     
-    
+    private Documento existeDoc(String nombreDocumento){
+       
+        for (int i = 0; i < listaPalabras.size(); i++) {
+        
+            for ( Documento nombreDoc : listaPalabras.get(i).getConjuntoDocumento() )
+                            {
+                                    if(nombreDoc.getNombre().equals(nombreDocumento))
+                                {
+                                        //Como el archivo si existia no seguimos recorriendo
+                                         return nombreDoc;
+                                }
+                            }     
+                       }
+        return new Documento(nombreDocumento);
+    }
 }

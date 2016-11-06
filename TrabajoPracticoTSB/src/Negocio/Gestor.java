@@ -28,6 +28,7 @@ public class Gestor extends SwingWorker<Void,Integer>{
     public Gestor() {
         this.listaRutas = new ArrayList<String>();
         vocabulario = new Vocabulario();
+        CargarPalabras();
     }
     
     public void CargarPalabras()
@@ -92,7 +93,9 @@ public class Gestor extends SwingWorker<Void,Integer>{
                 
                 String palabra = arregloPalabras[i].toLowerCase();
                 palabra = SacarSignos(palabra);
-                listaPalabras.add(palabra);
+                if (!palabra.equals("")) {
+                    listaPalabras.add(palabra);
+                }
             }
         }
         
@@ -179,7 +182,7 @@ public class Gestor extends SwingWorker<Void,Integer>{
             setProgress(cant*i);
       
         }
-        //VocabularioDao.GuardarLista(vocabulario.getListaPalabra());
+        VocabularioDao.GuardarLista(vocabulario.getListaPalabra());
         setProgress(100);
         
         return null;

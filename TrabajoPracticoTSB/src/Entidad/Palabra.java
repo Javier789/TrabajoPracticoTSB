@@ -25,6 +25,13 @@ public class Palabra {
         idPalabra = 0;
     }
 
+    public Palabra(int idPalabra, String palabra, int repeticion, List<Documento> conjuntoDocumento) {
+        this.idPalabra = idPalabra;
+        this.palabra = palabra;
+        this.repeticion = repeticion;
+        this.conjuntoDocumento = conjuntoDocumento;
+    }
+
     public String getPalabra() {
         return palabra;
     }

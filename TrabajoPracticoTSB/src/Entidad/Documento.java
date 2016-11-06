@@ -18,6 +18,11 @@ public class Documento {
         this.nombre = nombre;
     }
 
+    public Documento(int idDocumento, String nombre) {
+        this.idDocumento = idDocumento;
+        this.nombre = nombre;
+    }
+
     public int getIdDocumento() {
         return idDocumento;
     }
