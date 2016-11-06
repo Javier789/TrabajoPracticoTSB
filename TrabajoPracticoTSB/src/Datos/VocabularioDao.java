@@ -13,19 +13,18 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.ProgressMonitor;
 
-/**
- *
- * @author Sebastián
- */
+
 public class VocabularioDao {
-    static String url = "/home/javier/Escritorio/TrabajoPracticoTSB-master/TrabajoPracticoTSB/BasedeDatos/Prueba.sqlite";
+    static String url = "Prueba.sqlite";
     static Connection connect;
     
     public static Boolean connect() {
         try {
-            Class.forName("org.sqlite.JDBC");
-            connect = DriverManager.getConnection("jdbc:sqlite:"+url);
+           Class.forName("org.sqlite.JDBC");
+            
+           connect = DriverManager.getConnection("jdbc:sqlite:"+url);
            
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "FALLO ACCESO A BASE DE DATOS "+ex.getMessage());
@@ -48,9 +47,7 @@ public class VocabularioDao {
         if (connect()) {
             for (Palabra palabra : listaPalabras) 
             {
-                //PreparedStatement st = connect.prepareStatement("select COUNT(*) AS cant from Palabra where id = ?");
-                //st.setInt(1,palabra.getIdPalabra());
-                //result = st.executeQuery();
+                
                if(palabra.getIdPalabra() == 0)// Si es igual a cero todavia no tiene un id 
                {
                    GuardarPalabraNueva(palabra);
@@ -121,7 +118,7 @@ public class VocabularioDao {
             List<Documento> listaDoc = palabraExistente.getConjuntoDocumento();
             for(Documento doc : listaDoc)
             {
-                if(doc.getIdDocumento()!=0)//Quiere decir que el documento es nuevo
+                if(doc.getIdDocumento() == 0)//Quiere decir que el documento es nuevo
                 {
                     int idDocumento= GuardarDocumento(doc);
                     //Insert Into para guardar en la tabla PalabraXDocumento
@@ -136,15 +133,15 @@ public class VocabularioDao {
              JOptionPane.showMessageDialog(null, "ERROR Actualizar Palabra: "+ex.getMessage());
         
     }}
-    
-private static int ultimoID(String tabla){
+
+    private static int ultimoID(String tabla){
         ResultSet result = null;
-        int id = 0;
+       int id = 0;
         try {
-            PreparedStatement st = connect.prepareStatement("select (max(id)) AS 'id' from " + tabla);
-            result = st.executeQuery();
-            id = result.getInt("id") + 1;// este te da el ultimo id que esta en la tabla
-           
+                PreparedStatement st = connect.prepareStatement("select (max(id)) AS 'id' from " + tabla);
+                result = st.executeQuery();
+                id = result.getInt("id") + 1;// este te da el ultimo id que esta en la tabla
+
         } catch (SQLException ex) {
              JOptionPane.showMessageDialog(null, "ERROR : "+ex.getMessage());
         }
@@ -154,23 +151,37 @@ private static int ultimoID(String tabla){
         List<Palabra> lista = new ArrayList<Palabra>();
     if (connect()) {
             try {
-                PreparedStatement st = connect.prepareStatement("select id from Palabra ");
-                ResultSet result1 = st.executeQuery();
-                
-                   while(result1.next()){
-                        st = connect.prepareStatement("select doc.id,doc.nombre,pal.id as idPal,pal.palabra,pal.repeticion from Documentos doc join PalabraPorDocumento PxD on doc.id = PxD.id_documento join Palabra pal on pal.id = PXD.id_Palabra where pal.id = ?");
-                        st.setInt(1,result1.getInt("id"));
-                        ResultSet result = st.executeQuery();
-                        List<Documento> ListaDoc = new ArrayList<Documento>();
-                        Palabra p = new Palabra(result.getInt("idPal"),result.getString("palabra"),result.getInt("repeticion"),ListaDoc);
-                        while(result.next()){
-                            ListaDoc.add(new Documento(result.getInt("id"),result.getString("nombre")));
-                            }
-                       p.setConjuntoDocumento(ListaDoc);
-                       lista.add(p);
-                    }
+                 
+                 PreparedStatement st = connect.prepareStatement("select id, nombre from Documentos");
+                ResultSet rsDOc = st.executeQuery();
+                List<Documento> ListaDoc = new ArrayList<Documento>();
+                 while(rsDOc.next()){
+                    ListaDoc.add(new Documento(rsDOc.getInt("id"),rsDOc.getString("nombre")));
+                 }
                 
                 
+                st = connect.prepareStatement("select p.id, p.palabra,p.repeticion from Palabra p");
+                ResultSet rsPal = st.executeQuery();
+                while(rsPal.next()){
+                   Palabra p = new Palabra(rsPal.getInt("id"),rsPal.getString("palabra"),rsPal.getInt("repeticion"),new ArrayList<Documento>());
+                    lista.add(p);
+                }
+                
+                
+                
+                for (int i = 0; i < ListaDoc.size(); i++) {
+                   st = connect.prepareStatement("select p.id, p.palabra,p.repeticion from Palabra p,  PalabraPorDocumento pD, Documentos d where ? = pD.id_Documento and p.id = pD.id_Palabra");
+                   st.setInt(1,ListaDoc.get(i).getIdDocumento());
+                   ResultSet rsPxD = st.executeQuery();
+                    while(rsPxD.next()){
+                        
+                            lista.get(rsPxD.getInt("id")-1).nuevoDocumento(ListaDoc.get(i));
+                            
+                            
+                        } 
+                }
+                
+               
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(null, "ERROR Cargar Palabra: "+ex.getMessage());
             }

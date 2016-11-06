@@ -14,6 +14,7 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ProgressMonitor;
+import javax.swing.SwingWorker;
 
 
 /**
@@ -30,9 +31,10 @@ public class MainPantalla extends javax.swing.JFrame {
     public MainPantalla() {
         initComponents();
            this.setResizable(false);
-         panelVocabularioGuardadro = new VocabularioGuardado(this);
-        panelCargarArchivo = new CargarArchivo(this);
-       
+            panelVocabularioGuardadro = new VocabularioGuardado(this);
+            panelCargarArchivo = new CargarArchivo(this);
+            
+            
     }
 
     /**
@@ -147,11 +149,10 @@ public class MainPantalla extends javax.swing.JFrame {
             public void propertyChange(PropertyChangeEvent evt) {
                 if ("progress".equals(evt.getPropertyName())) {
                     int progress = (Integer) evt.getNewValue();
-                 progressMonitor.setProgress(progress);
-                 String message =
-                String.format("Completed %d%%.\n", progress);
-            progressMonitor.setNote(message);
-                
+                    progressMonitor.setProgress(progress);
+                    String message =
+                    String.format("Completed %d%%.\n", progress);
+                    progressMonitor.setNote(message);
                 }
             }
         });
@@ -163,7 +164,7 @@ public class MainPantalla extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-        private Gestor leector = new Gestor();
+        static private Gestor leector = new Gestor();
         
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -196,9 +197,9 @@ public class MainPantalla extends javax.swing.JFrame {
                 new MainPantalla().setVisible(true);
             }
         });
-
+        
     }
-
+        
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cargarArchivo;
     private javax.swing.JPanel jPanel1;

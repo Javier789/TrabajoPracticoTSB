@@ -15,6 +15,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import Entidad.*;
 import Datos.*;
+import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 /**
  *
@@ -29,6 +30,7 @@ public class Gestor extends SwingWorker<Void,Integer>{
         this.listaRutas = new ArrayList<String>();
         vocabulario = new Vocabulario();
         CargarPalabras();
+        
     }
     
     public void CargarPalabras()
@@ -40,13 +42,7 @@ public class Gestor extends SwingWorker<Void,Integer>{
     {
         listaRutas.add(ruta);
     }
-    
-    public void ProcesarArchivo(String ruta)
-    {
-            
-       
-    }
-    
+   
     public List ConsultarVocabulario()
     {
         return vocabulario.conocerVocabulario();
@@ -170,14 +166,9 @@ public class Gestor extends SwingWorker<Void,Integer>{
             List<String> listaPalabras = DevolverListaDePalabras(listaLineasArchivo);
             i++;
             setProgress(cant*i);
-           /* time_start = System.currentTimeMillis();
-            vocabulario.addRange(listaPalabras,  nombreDocumento);
-            time_end = System.currentTimeMillis();
-            System.out.println("the task has taken "+ ( time_end - time_start ) +" milliseconds");*/
-            time_start = System.currentTimeMillis();
+           
             vocabulario.addRangeOptimo(listaPalabras, nombreDocumento);
-            time_end = System.currentTimeMillis();
-            System.out.println("the task has taken "+ ( time_end - time_start ) +" milliseconds");
+            
             i++;
             setProgress(cant*i);
       
